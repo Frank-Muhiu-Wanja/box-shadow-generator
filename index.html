@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box Shadow Generator</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url("white.jpg");
+        /* flex-direction: column; */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+      }
+      #play-music {
+        position: absolute;
+        top: 70px;
+        padding: 7px;
+        background-color: whitesmoke;
+        border: 1px;
+        box-shadow: 2px 2px 2px;
+      }
+      @media (max-width: 700px) {
+        body {
+          background: url("white.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+      }
+      @media (max-width: 400px) {
+        body {
+          background: url("white.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+      }
+      .box {
+        width: 300px;
+        text-align: center;
+        /* border: solid 1px; */
+        padding: 16px;
+        margin: 32px;
+        font-family: sans-serif;
+        background-color: white;
+      }
+      .box input {
+        border: solid 1px;
+        margin: 8px 0;
+        display: block;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="bg-music" loop autoplay>
+      <source src="dreamy.mp3" type="audio/mp3" />
+    </audio>
+    <button id="play-music">Play Music</button>
+
+    <div class="box">
+      <label>Offset X</label>
+      <input class="offset-x" type="range" min="0" max="100" value="2" />
+      <label>Offset Y</label>
+      <input class="offset-y" type="range" min="0" max="100" value="2" />
+      <label>Blur Radius</label>
+      <input class="blur-radius" type="range" min="0" max="100" value="2" />
+      <label>Blur Spread</label>
+      <input class="blur-spread" type="range" min="0" max="100" value="2" />
+      <label>Color</label>
+      <input class="color" type="color" value="#000000" />
+
+      <input
+        class="css-value"
+        type="text"
+        onclick="this.select()"
+        readonly
+        value="Mr.Frank"
+      />
+    </div>
+    <script>
+      const btnMusic = document.getElementById("play-music");
+      const bgMusic = document.getElementById("bg-music");
+
+      btnMusic.addEventListener("click", function () {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          btn.textContent = "Pause Music";
+        } else {
+          bgMusic.pause();
+          btn.textContent = "Play Music";
+        }
+      });
+
+      const box = document.querySelector(".box");
+      const x = document.querySelector(".offset-x");
+      const y = document.querySelector(".offset-y");
+      const radius = document.querySelector(".blur-radius");
+      const spread = document.querySelector(".blur-spread");
+      const color = document.querySelector(".color");
+      const cssValue = document.querySelector(".css-value");
+
+      function updateBoxShadow() {
+        const v = `${x.value}px ${y.value}px ${radius.value}px ${spread.value}px ${color.value}`;
+        cssValue.value = v;
+        box.style.boxShadow = v;
+      }
+
+      [x, y, radius, spread, color].forEach((element) => {
+        element.oninput = updateBoxShadow;
+      });
+
+      updateBoxShadow();
+    </script>
+  </body>
+</html>
